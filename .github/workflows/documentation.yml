@@ -1,0 +1,23 @@
+name: Documentation
+
+on:
+  workflow_call:
+
+jobs:
+  documentation:
+    runs-on: ubuntu-latest
+    container:
+      image: python:3.9
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install Poetry
+        run: pip install poetry
+      - name: Install dependencies
+        run: poetry install
+      - name: Build documentation
+        run: poetry run sphinx-build -b html docs/ public/
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: documentation
+          path: public/
