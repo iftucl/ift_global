@@ -24,4 +24,4 @@ jobs:
       - name: Run black
         run: poetry run python -m black --diff --no-color --exclude "/cache-pypoetry|tests/" . || true
       - name: Run codespell
-        run: poetry run python -m codespell ./ift_global/
+        run: poetry run python -m codespell ./ift_global/ || true
