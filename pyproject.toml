@@ -16,8 +16,75 @@ css-inline = "^0.14.6"
 pandas = "^2.2.3"
 boto3 = "^1.35.92"
 pyarrow = "^18.1.0"
+pytest-mock = "^3.14.0"
+pytest-cov = "^6.0.0"
+pytest-xdist = "^3.6.1"
+bandit = "^1.8.0"
+codespell = "^2.2.6"
 
 
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.bandit]
+targets = ["ift_global"]
+exclude_dirs = ["ift_global/tests"]
+skips = ['B301', 'B105']
+
+
+[tool.pytest.ini_options]
+testpaths = "ift_global/tests/"
+python_files = "test_*.py"
+
+[tool.ruff]
+line-length = 120
+exclude = ["test_*.py"]
+
+[tool.ruff.lint]
+select = [
+    "E",  # pycodestyle errors
+    "W",  # pycodestyle warnings
+    "F",  # pyflakes
+    "I",  # isort
+    "B",  # flake8-bugbear
+    "C4",  # flake8-comprehensions
+    "N",  # PEP8 naming conventions
+    "D",  # pydocstyle
+    "PL" # pylint
+]
+ignore = [
+    "C901",  # too complex
+    "W191",  # indentation contains tabs
+    "D401",  # imperative mood        
+    "E20", # Extra space in brackets        
+    "E26", # Comment
+    "D100", # Missing docstring in public module
+    "D102", # missing docstring in method
+    "D105", # missing docstring in magic method
+    "B904" # B904 Within an `except` clause, raise exceptions 
+]
+
+exclude = [
+  "docs/sphinxext/*.py",
+  "docs/build/*.py",
+  "docs/temp/*.py",
+  "ift_global/tests/*.py",
+  "__init__.py",
+]
+[tool.ruff.lint.pydocstyle]
+convention = "sphinx"
+
+[tool.poetry-dynamic-versioning]
+enable = true
+metadata = false
+vcs = "git"
+latest-tag = true
+format = "{base}"
+
+[tool.poetry-dynamic-versioning.substitution]
+files = ["ift_global/__init__.py"]
+patterns = [
+    '''(^__version__\s*(?::.*?)?=\s*['"])[^'"]*(['"])''',
+    { value = '''(^__version_tuple__\s*(?::.*?)?=\s*\()[^)]*(\))''', mode = "tuple" },
+]
