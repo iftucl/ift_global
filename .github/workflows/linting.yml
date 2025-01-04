@@ -1,7 +1,12 @@
 name: Linting
 
 on:
-  workflow_call:
+  push:
+    branches: ['*']
+  pull_request:
+    # The branches below must be a subset of the branches above
+    branches: [ main ]
+
 
 jobs:
   test:
@@ -14,5 +19,5 @@ jobs:
         run: pip install poetry
       - name: Install dependencies
         run: poetry install
-      - name: Run tests
+      - name: Run ruff
         run: poetry run python -m ruff --exclude cache-pypoetry --exclude tests . || true
