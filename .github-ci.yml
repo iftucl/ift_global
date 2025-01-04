@@ -1,0 +1,32 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: ['*']
+  pull_request:
+    types: [closed]
+
+jobs:
+  linting:
+    uses: ./.github/workflows/linting.yml
+    if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.pull_request.merged == true)
+
+  test:
+    uses: ./.github/workflows/test.yml
+    if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.pull_request.merged == true)
+
+  vulnerability-scan:
+    uses: ./.github/workflows/vulnerability-scan.yml
+    if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.pull_request.merged == true)
+
+  build:
+    uses: ./.github/workflows/build.yml
+    if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.pull_request.merged == true)
+
+  documentation:
+    uses: ./.github/workflows/documentation.yml
+    if: github.event_name == 'pull_request' && github.event.pull_request.merged == true
+
+  publish:
+    uses: ./.github/workflows/publish.yml
+    if: github.event_name == 'pull_request' && github.event.pull_request.merged == true

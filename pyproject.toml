@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "ift-global"
+version = "0.1.0"
+description = "generic functionalities used by students of IFT Big Data in Quantitative Finance"
+authors = ["Luca Cocconcelli <uceslc0@ucl.ac.uk>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+pydantic = "^2.10.4"
+pytest = "^8.3.4"
+sphinx = "^8.1.3"
+ruff = "^0.8.5"
+black = "^24.10.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
