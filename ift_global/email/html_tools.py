@@ -1,4 +1,5 @@
 from typing import Union
+
 import css_inline
 import pandas as pd
 from jinja2 import Environment, FileSystemLoader, select_autoescape
@@ -25,7 +26,7 @@ def jinja_to_html(template_dir: str, template_name: str, stylesheet: str, loc_va
 
     :Examples:
             >>> html_table = sirs_common.email.html_tools.jinja_to_html(
-            ...     template_dir='/path/to/docs/', 
+            ...     template_dir='/path/to/docs/',
             ...     template_name='my_template.j2',
             ...     stylesheet='2',
             ...     loc_var=vars()
@@ -35,11 +36,11 @@ def jinja_to_html(template_dir: str, template_name: str, stylesheet: str, loc_va
         loader=FileSystemLoader(template_dir),
         autoescape=select_autoescape(['html', 'htm', 'xml'])  # Enable autoescaping for HTML and XML files
     )
-    
+
     env.globals = {**env.globals, **loc_vars}
     env.globals['build_html_table'] = build_html_table
     env.globals['style_sheet'] = stylesheet
-    
+
     template = env.get_template(template_name)
     html_body = template.render() + footer
     inliner = css_inline.CSSInliner(keep_style_tags=True)
@@ -64,16 +65,13 @@ def build_html_table(input_data: Union[list, dict, pd.DataFrame]) -> str:
     :Example:
 
     >>> import pandas as pd
-    >>> from sirs_common.email.html_tools import build_html_table
-    >>> 
+    >>> from sirs_common.email.html_tools import build_html_table 
     >>> # Using a pandas DataFrame
     >>> df_input = pd.DataFrame({"A": [1, 2], "B": [3, 4]})
     >>> html_table = build_html_table(df_input)
-    >>> 
     >>> # Using a dictionary
     >>> dict_input = {"A": [1, 2], "B": [3, 4]}
     >>> html_table = build_html_table(dict_input)
-    >>> 
     >>> # Using a list of dictionaries
     >>> list_input = [{"A": 1, "B": 3}, {"A": 2, "B": 4}]
     >>> html_table = build_html_table(list_input)
@@ -88,7 +86,7 @@ def build_html_table(input_data: Union[list, dict, pd.DataFrame]) -> str:
        uses `str()` to convert values when building the table.
     """
     class_type = input_data.__class__.__name__
-    
+
     if class_type not in ('dict', 'list', 'DataFrame'):
         raise TypeError(f'Class type must be dict, list, or pd DataFrame; you provided {class_type}')
 
@@ -103,7 +101,7 @@ def build_html_table(input_data: Union[list, dict, pd.DataFrame]) -> str:
     elif isinstance(input_data, list):
         sorted_input = sorted(input_data[0])
         html = '<table><tr><th>' + '</th><th>'.join(sorted_input) + '</th></tr>'
-        
+
         for dict_items in input_data:
             try:
                 sorted_items = [str(dict_items[item_key]) for item_key in sorted_input]
@@ -111,15 +109,14 @@ def build_html_table(input_data: Union[list, dict, pd.DataFrame]) -> str:
             except KeyError as e:
                 print(e.__cause__)
                 raise ValueError('All dictionaries within this list must have the same keys. Not possible to build table.')
-    
+
     html += '</table>'
-    
+
     return html
 
 
 def inject_stylesheet(html_string: str, style_sheet: str) -> str:
-    """
-    Inject stylesheet into HTML.
+    """Inject stylesheet into HTML.
 
     :param html_string: HTML body as a character string.
     :type html_string: str
@@ -128,10 +125,9 @@ def inject_stylesheet(html_string: str, style_sheet: str) -> str:
     :return: Enriched HTML string.
     :rtype: str
     """
-    
     if html_string.startswith('<html>'):
         html_string = html_string.replace('<html>', '')
-    
+
     html_enriched = '<html><style>{}</style>{}'.format(
         style_sheet,
         html_string

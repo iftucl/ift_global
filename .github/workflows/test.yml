@@ -19,4 +19,4 @@ jobs:
       - name: Install dependencies
         run: poetry install
       - name: Run tests
-        run: poetry run python -m pytest ./ift_global/tests --cov-report=xml --cov-report=term --cov-branch --junitxml-report=report.xml
+        run: poetry run python -m pytest ./ift_global/tests --cov-report=xml --cov-report=term --cov-branch --junit-xml=report.xml

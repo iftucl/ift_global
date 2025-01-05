@@ -21,6 +21,11 @@ pytest-cov = "^6.0.0"
 pytest-xdist = "^3.6.1"
 bandit = "^1.8.0"
 codespell = "^2.2.6"
+ruamel-yaml = "^0.18.8"
+cryptography = "^44.0.0"
+sphinx-design = "^0.6.1"
+sphinx-pydantic = "^0.1.1"
+pydata-sphinx-theme = "^0.16.1"
 
 
 [build-system]
@@ -62,7 +67,8 @@ ignore = [
     "D100", # Missing docstring in public module
     "D102", # missing docstring in method
     "D105", # missing docstring in magic method
-    "B904" # B904 Within an `except` clause, raise exceptions 
+    "B904", # B904 Within an `except` clause, raise exceptions
+    "D212"  # docstring starts with newline 
 ]
 
 exclude = [
@@ -72,8 +78,6 @@ exclude = [
   "ift_global/tests/*.py",
   "__init__.py",
 ]
-[tool.ruff.lint.pydocstyle]
-convention = "sphinx"
 
 [tool.poetry-dynamic-versioning]
 enable = true

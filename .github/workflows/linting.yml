@@ -20,7 +20,7 @@ jobs:
       - name: Install dependencies
         run: poetry install
       - name: Run ruff
-        run: poetry run python -m ruff . || true
+        run: poetry run python -m ruff check ./ift_global/ || true
       - name: Run black
         run: poetry run python -m black --diff --no-color --exclude "/cache-pypoetry|tests/" . || true
       - name: Run codespell

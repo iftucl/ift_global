@@ -90,7 +90,7 @@ def serialise_parquet(
           output_data: Union[list, dict, pd.DataFrame]
         ) -> str:
     """
-    Serialise data to parquet
+    Serialise data to parquet.
 
     :param output_data: _description_
     :type output_data: Union[list, dict, pd.DataFrame]
@@ -140,8 +140,7 @@ def deserialise_pickle(
           response_body : str,
           read_type : str = 'read' # TODO as for now defaults to read, maybe future can be improved
           ) -> Union[list, dict]:
-    """
-    Deserialise pickle file.
+    """Deserialise pickle file.
 
     :param response_body: body response from boto3
     :type response_body: str

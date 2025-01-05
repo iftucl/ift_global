@@ -1,7 +1,10 @@
-import boto3
-from botocore.exceptions import ClientError, ParamValidationError, HTTPClientError
 from typing import Optional
+
+import boto3
+from botocore.exceptions import ClientError, HTTPClientError, ParamValidationError
+
 from ift_global.credentials.minio_cr import MinioCredentials
+
 
 class BaseMinioConnection:
     """

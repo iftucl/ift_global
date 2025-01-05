@@ -1,23 +1,23 @@
 import datetime
+import inspect
 import logging
 import logging.handlers
 import os
-from typing import Optional, Literal
-import inspect
+from typing import Literal, Optional
+
 
 class IFTLogger:
     """IFT Logging functionality."""
 
     def __init__(
-            self, 
+            self,
             app_name : str,
             service_name : str,
             log_level: Optional[Literal['debug', 'warning', 'info', 'critical']] = 'debug',
             log_path : str = None,
             write_file : bool = False
         ) -> None:
-        """
-        Constructor method.
+        """Constructor method.
 
         :param app_name: name of the application i.e. MyApp etc ...
         :type app_name: str
@@ -53,8 +53,8 @@ class IFTLogger:
     def logger(self, value):
         self._logger = self._init_logger(value=value)
         self._remove_old_handlers()
-    
-    def _get_log_level(self):       
+
+    def _get_log_level(self):
         log_levels = {
             'debug': logging.DEBUG,
             'info': logging.INFO,
@@ -63,7 +63,7 @@ class IFTLogger:
             'critical': logging.CRITICAL
         }
         return log_levels.get(self.log_level, logging.DEBUG)
-    
+
     def _init_logger(self, value = None):
         self._logger_id()
 
@@ -159,17 +159,17 @@ class IFTLogger:
     def _standard_logging_message(self):
 
         return f'%(asctime)s | {self.app_name} | {self.service_name} | %(levelname)-8s | %(message)s'
-    
+
     def _get_caller_info(self):
         # Get the caller's frame
-        try:            
-            frame = inspect.stack()[2]            
+        try:
+            frame = inspect.stack()[2]
             filename = os.path.basename(frame.filename)
             return filename, frame.lineno
         except IndexError:
             print('Index Error inspect stack out of range')
             return 'unknown_file', 'unknow_line'
-        
+
     def debug(self, message):
         """Log a debug message."""
         filename, lineno = self._get_caller_info()

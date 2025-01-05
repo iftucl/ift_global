@@ -1,8 +1,9 @@
 from abc import ABC, abstractmethod
 
+
 class FileSystemRepository(ABC):
     """
-    File System Repository
+    File System Repository.
 
     Abstract base class defining the interface for a S3 object repository.
 

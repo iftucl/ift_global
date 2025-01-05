@@ -12,17 +12,20 @@ from datetime import date
 
 
 project = 'ift_global'
-copyright = '2025, Institute for Finance & Technology'
+copyright = f'{date.today().year}, UCL - Institute for Finance & Technology'
 author = 'Luca Cocconcelli'
 release = '0.1.0'
 
 current_dir = os.path.dirname(__file__)
-target_dir = os.path.abspath(os.path.join(current_dir, '../../../sirs_lopta'))
+target_dir = os.path.abspath(os.path.join(current_dir, '../../../ift_global'))
 sys.path.insert(0, target_dir)
 
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
+html_css_files = [
+    'css/custom.css',
+]
 html_theme = 'pydata_sphinx_theme'
 
 html_logo = '_static/ift_global_banner.png'
@@ -33,7 +36,7 @@ source_suffix = '.rst'
 
 # The main toctree document.
 master_doc = 'index'
-
+default_colours = {"main": "#8a1047"}
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
@@ -47,6 +50,7 @@ extensions = [
     'sphinx.ext.mathjax',
     'sphinx.ext.intersphinx',
     "sphinx_design",
+    "sphinx-pydantic",
     ]
 
 templates_path = ['_templates']
@@ -73,4 +77,13 @@ autodoc_default_options = {
     'special-members': '__init__',
     'undoc-members': True,
     'exclude-members': '__weakref__'
+}
+
+html_title = f"{project} Manual"
+
+autosummary_generate = True
+
+html_context = {
+   # ...
+   "default_mode": "dark"
 }

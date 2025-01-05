@@ -1,0 +1,31 @@
+.bd-header {
+    background-color: #8a1047 !important;
+}
+
+.sd-btn-secondary, .sd-btn-outline-secondary:hover, .sd-btn-outline-secondary:focus {    
+    background-color: #8a1047 !important;
+    border-color: #8a1047 !important;
+    border-width: 1px !important;
+    border-style: solid !important;
+}
+
+.sd-btn-secondary:hover {
+    background-color: #93114c !important;
+    border-color: #93114c !important;
+    border-width: 1px !important;
+    border-style: solid !important;
+}
+a.headerlink {
+    color: #93114c !important;
+}
+a:visited {
+    color: #cdc8c8 !important;
+}
+a:hover {
+    color: #ffffff !important;
+}
+.bd-header ul.navbar-nav>li.nav-item>.nav-link {
+    color: #ffffff;
+    padding-inline: 6px;
+    position: relative;
+}

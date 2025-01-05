@@ -9,7 +9,8 @@ from ift_global.utils.file_operations import check_path, extract_file_name
 
 
 class MinioFileSystemRepo(BaseMinioConnection, FileSystemRepository):
-    """Minio File Client.
+    """
+    Minio File Client.
 
     A repository class for interacting with Minio Object storage.
 
@@ -22,19 +23,10 @@ class MinioFileSystemRepo(BaseMinioConnection, FileSystemRepository):
         """
         Constructor method.
 
-        Parameters
-        ----------
-        Args:
-            bucket_name (str) : name of a bucket in minio.
-
-        Kwargs:
-            user (str) : a string with username for minio. if empty
-                         defaults to os.getenv('MINIO_USER').
-            password (str) : a string with password for minio. if empty
-                             defaults to os.getenv('MINIO_PASSWORD').
-            endpoint_url (str) : a string with url for minio. if empty 
-                                 defaults to os.getenv('MINIO_URL').
-
+        :param str bucket_name: Name of a bucket in MinIO.
+        :param str user: Username for MinIO. If empty, defaults to os.getenv('MINIO_USER').
+        :param str password: Password for MinIO. If empty, defaults to os.getenv('MINIO_PASSWORD').
+        :param str endpoint_url: URL for MinIO. If empty, defaults to os.getenv('MINIO_URL').
         """
         super().__init__(bucket_name,
                          user=kwargs.get('user'),
@@ -102,7 +94,7 @@ class MinioFileSystemRepo(BaseMinioConnection, FileSystemRepository):
         all_dirs = [x.split('/') for x in all_dirs]
         relative_dirs = []
         for i, z in enumerate(all_dirs, 0):
-            *_, last_dir, empty_space = all_dirs[i]
+            *_, last_dir, empty_space = z
             relative_dirs.append(last_dir)
         return relative_dirs
 
