@@ -1,10 +1,11 @@
 import re
+
 from pydantic import validate_call
+
 
 @validate_call
 def trim_string(x: str, what: str, action_regex: str = '\\s+') -> str:
-	"""
-	Trim end and/or start of a string based on regex expr
+	r"""Trim end and/or start of a string based on regex expr
 
 	:param x: a string to be cleaned
 	:type x: str
@@ -19,8 +20,8 @@ def trim_string(x: str, what: str, action_regex: str = '\\s+') -> str:
 	"""
 	if what not in ('both', 'leading', 'trailing', 'none'):
 		raise ValueError('Only "both", "leading" and "trailing" are accepted for "what" argument')
-	
-	match what:        
+
+	match what:
 		case 'both':
 			return re.sub(f'^[{action_regex}]+|[{action_regex}]+$', '', x)
 		case 'leading':

@@ -1,10 +1,14 @@
 name: Build
 
 on:
-  workflow_call:
+  pull_request:
+    types: [closed]
+    branches:
+      - main
 
 jobs:
   build:
+    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     container:
       image: python:3.10
@@ -14,8 +18,8 @@ jobs:
         run: pip install poetry
       - name: Build package
         run: poetry build
-      - name: Upload artifact
+      - name: Store artifacts
         uses: actions/upload-artifact@v3
         with:
-          name: dist
+          name: python-package-distributions
           path: dist/

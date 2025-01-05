@@ -5,6 +5,7 @@ on:
 
 jobs:
   documentation:
+    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     container:
       image: python:3.9
@@ -15,7 +16,7 @@ jobs:
       - name: Install dependencies
         run: poetry install
       - name: Build documentation
-        run: poetry run sphinx-build -b html docs/ public/
+        run: poetry run sphinx-build -b html docs/source public/
       - name: Upload artifact
         uses: actions/upload-artifact@v3
         with:

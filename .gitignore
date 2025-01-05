@@ -172,3 +172,16 @@ cython_debug/
 
 # poetry lock
 *.lock
+
+# ruff
+.ruff_cache/
+
+# xml files
+*.xml
+
+# sphinx local
+docs/build/
+docs/source/generated/
+
+# vscode local
+.vscode/

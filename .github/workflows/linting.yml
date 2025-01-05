@@ -1,10 +1,15 @@
 name: Linting
 
 on:
-  workflow_call:
+  push:
+    branches: ['*']
+  pull_request:
+    # The branches below must be a subset of the branches above
+    branches: [ main ]
+
 
 jobs:
-  test:
+  linting:
     runs-on: ubuntu-latest
     container:
       image: python:3.10
@@ -14,5 +19,9 @@ jobs:
         run: pip install poetry
       - name: Install dependencies
         run: poetry install
-      - name: Run tests
-        run: poetry run python -m ruff --exclude cache-pypoetry --exclude tests . || true
+      - name: Run ruff
+        run: poetry run python -m ruff check ./ift_global/ || true
+      - name: Run black
+        run: poetry run python -m black --diff --no-color --exclude "/cache-pypoetry|tests/" . || true
+      - name: Run codespell
+        run: poetry run python -m codespell ./ift_global/ || true

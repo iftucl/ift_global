@@ -1,7 +1,11 @@
 name: Test
 
 on:
-  workflow_call:
+  push:
+    branches: ['*']
+  pull_request:
+    # The branches below must be a subset of the branches above
+    branches: [ main ]
 
 jobs:
   test:
@@ -15,4 +19,4 @@ jobs:
       - name: Install dependencies
         run: poetry install
       - name: Run tests
-        run: poetry run python -m pytest ./ift_global/tests --cov-report=xml --cov-report=term --cov-branch --junitxml-report=report.xml
+        run: poetry run python -m pytest ./ift_global/tests --cov-report=xml --cov-report=term --cov-branch --junit-xml=report.xml
