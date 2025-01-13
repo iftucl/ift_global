@@ -1,14 +1,17 @@
 name: Documentation
 
 on:
-  workflow_call:
+  pull_request:
+    types: [closed]
+    branches:
+      - main
 
 jobs:
   documentation:
     if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     container:
-      image: python:3.9
+      image: python:3.10
     steps:
       - uses: actions/checkout@v3
       - name: Install Poetry
