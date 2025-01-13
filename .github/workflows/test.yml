@@ -32,7 +32,6 @@ jobs:
         run: echo ${{ steps.vars.outputs.short_ref }}
 
   publishcov:
-    if: ${{ github.event.pull_request.merged == true }}
     runs-on: ubuntu-latest
     needs: test
     steps:
