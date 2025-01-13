@@ -20,3 +20,22 @@ jobs:
         run: poetry install
       - name: Run tests
         run: poetry run python -m pytest ./ift_global/tests --cov-report=xml --cov-report=term --cov-branch --junit-xml=report.xml
+      - name: Upload coverage report
+        uses: actions/upload-artifact@v3
+        with:
+          name: report.xml
+          path: report.xml
+
+  publishcov:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - uses: codecov/codecov-action@v5
+        with:
+          fail_ci_if_error: true # optional (default = false)
+          files: report.xml # optional
+          flags: unittests # optional
+          name: codecov-umbrella # optional
+          token: ${{ secrets.CODECOV_TOKEN }}
+          verbose: true # optional (default = false)
