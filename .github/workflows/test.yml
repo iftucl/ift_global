@@ -4,8 +4,9 @@ on:
   push:
     branches: ['*']
   pull_request:
-    # The branches below must be a subset of the branches above
-    branches: [ main ]
+    types: [closed]
+    branches:
+      - main
 
 jobs:
   test:
@@ -27,7 +28,7 @@ jobs:
           path: report.xml
 
   publishcov:
-    if: ${{ github.event.pull_request.merged == true }}
+    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     needs: test
     steps:
