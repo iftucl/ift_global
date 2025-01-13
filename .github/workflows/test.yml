@@ -20,12 +20,14 @@ jobs:
       - name: Install dependencies
         run: poetry install
       - name: Run tests
-        run: poetry run python -m pytest ./ift_global/tests --cov-report=xml --cov-report=term --cov-branch --junit-xml=report.xml
+        run: poetry run python -m pytest ./ift_global/tests --cov=ift_global --cov-report=coverage.xml --cov-report=term --cov-branch --junit-xml=report.xml
       - name: Upload coverage report
         uses: actions/upload-artifact@v4
         with:
           name: coverage-report
-          path: report.xml
+          path: |
+            report.xml
+            coverage.xml
 
   publishcov:
     if: ${{ github.event.pull_request.merged == true }}
@@ -40,7 +42,7 @@ jobs:
       - uses: codecov/codecov-action@v5
         with:
           fail_ci_if_error: true
-          files: report.xml
+          files: coverage.xml, report.xml
           flags: unittests
           name: codecov-umbrella
           token: ${{ secrets.CODECOV_TOKEN }}
