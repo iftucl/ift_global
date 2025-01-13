@@ -26,10 +26,11 @@ cryptography = "^44.0.0"
 sphinx-design = "^0.6.1"
 sphinx-pydantic = "^0.1.1"
 pydata-sphinx-theme = "^0.16.1"
+python-dotenv = "^1.0.1"
 
 
 [build-system]
-requires = ["poetry-core"]
+requires = ["poetry-core", "poetry-dynamic-versioning>=1.0.0,<2.0.0"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.bandit]
