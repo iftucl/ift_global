@@ -10,6 +10,7 @@
 |**Build**|![Build Status](https://github.com/iftucl/ift_global/actions/workflows/build.yml/badge.svg)|
 |**Coverage**|![Coverage](https://github.com/iftucl/ift_global/actions/workflows/test.yml/badge.svg)|
 |**Linting**|![Linters](https://github.com/iftucl/ift_global/actions/workflows/linting.yml/badge.svg)|
+|**Vulnerability Scan**|![Vulnerability](https://github.com/iftucl/ift_global/actions/workflows/vulnerability-scan.yml/badge.svg)|
 
 # ift_global
 
