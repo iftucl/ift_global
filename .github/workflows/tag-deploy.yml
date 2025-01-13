@@ -22,8 +22,8 @@ jobs:
         run: |
           git config user.name github-actions
           git config user.email github-actions@github.com
-          git tag ${{ steps.generate_tag.outputs.NEW_TAG }}
-          git push origin ${{ steps.generate_tag.outputs.NEW_TAG }}
+git tag -l {{ steps.generate_tag.outputs.NEW_TAG }} && git push origin {{ steps.generate_tag.outputs.NEW_TAG }}
+
 
   deploy:
     needs: create-tag
