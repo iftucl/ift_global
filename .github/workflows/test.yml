@@ -44,4 +44,5 @@ jobs:
           flags: unittests
           name: codecov-umbrella
           token: ${{ secrets.CODECOV_TOKEN }}
+          slug: iftucl/ift_global
           verbose: true
