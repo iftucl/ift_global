@@ -13,6 +13,7 @@ ift_global documentation
 ================================================
 
 **Useful links**:
+
 `Source Repository <https://github.com/iftucl/ift_global/>`__ |
 `Issues & Ideas <https://github.com/iftucl/ift_global/issues>`__ |
 `Wiki & Q&A <https://github.com/iftucl/ift_global/wiki/>`__
@@ -116,6 +117,6 @@ Indices and tables
    :caption: Getting Started
 
    User Guides <userinfo/index>
-   Architecture Documents <guides/index>   
+   How To <guides/index>   
    API <reference/index>
    Development <dev/index>

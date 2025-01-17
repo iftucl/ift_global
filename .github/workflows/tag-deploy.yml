@@ -41,5 +41,5 @@ jobs:
             path: dist/
       - name: Deploy
         run: |
-            # Will add here the pypi deployment steps
-            echo "Deploying version ${{ needs.create-tag.outputs.NEW_TAG }}"
+            # Will add here the pypi deployment steps needs.create-tag.outputs.NEW_TAG
+            echo "Deploying version"
