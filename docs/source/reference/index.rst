@@ -16,7 +16,10 @@ In general,
 - A module that starts with an ```_``` should be considered as **private**.
 
 
+.. autosummary::
+   :toctree: generated/
 
+   ift_global
 
 
 .. toctree::

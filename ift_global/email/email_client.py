@@ -1,21 +1,3 @@
-"""
-.. email
-
-E-Mail Client Abstraction (:mod: `ift_global.cluster.hierarchy`)
-================================================================
-
-.. currentmodule:: ift_global.email.email_client
-
-Abstraction functionality to send e-mail
-
-.. autosummary::
-   :toctree: generated/
-
-   EmailClient
-
-
-
-"""
 import os
 from email.mime.application import MIMEApplication
 from email.mime.multipart import MIMEMultipart
@@ -31,44 +13,45 @@ from ift_global.email.html_tools import inject_stylesheet, jinja_to_html
 
 class EmailClient:
     """
-    E-Mail Functionality used to send e-mail.
-    """
+    E-Mail Functionality used to send e-mail.    
 
+    Args:
+    -----
+
+    :param template_dir: file path to folder where the body template is stored.
+    :type template_dir: str
+    :param template_name: name for the file used to generate e-mail body.
+        if jinja2 is provided, it will build the template
+        with `jinja_to_html` method.
+    :type template_name: str
+
+    Kwargs:
+    -------
+    
+    :param attachments: file path to attachments.
+    :type attachments:  Union[str, list] 
+    :param style_sheet: '1', '2' or '3' depending on which stylesheet,
+        if None selects '1'
+    :type style_sheet: str
+    :param smtp_server: smtp server address.
+    :type smtp_server: str
+    :param smtp_por: smtp server port.
+    :type smtp_port: str
+
+    :Examples:
+        >>> from ift_global import EmailClient
+        >>> mail_client = EmailClient(
+        ...                 smtp_server='smtpin.biz.com',
+        ...                 smtp_port=25
+        ...                )
+        >>> mail_client.send_mail(msg_from='no_reply_ift@ucl.ac.uk',
+        ...                       msg_to="f.bar@ucl.ac.uk",
+        ...                       mail_subject='UCL-IFT Auto Testing'
+        ...                       )
+
+        """
     def __init__(self, template_dir : str = None, template_name : str = None, loc_vars=vars(), **kwargs):
-        """
-        E-Mail class functionality to send e-mail.
 
-        Args:
-        :param template_dir: file path to folder where the body template is stored.
-        :type template_dir: str
-        :param template_name: name for the file used to generate e-mail body.
-            if jinja2 is provided, it will build the template
-            with `jinja_to_html` method.
-        :type template_name: str
-
-        Kwargs:
-        
-        :param attachments: file path to attachments.
-        :type attachments:  Union[str, list] 
-        :param style_sheet: '1', '2' or '3' depending on which stylesheet,
-            if None selects '1'
-        :type style_sheet: str
-        :param smtp_server: smtp server address.
-        :type smtp_server: str
-        :param smtp_por: smtp server port.
-        :type smtp_port: str
-        :Examples:
-            >>> from ift_global import EmailClient
-            >>> mail_client = EmailClient(
-            ...                 smtp_server='smtpin.biz.com',
-            ...                 smtp_port=25
-            ...                )
-            >>> mail_client.send_mail(msg_from='no_reply_ift@ucl.ac.uk',
-            ...                       msg_to="f.bar@ucl.ac.uk",
-            ...                       mail_subject='UCL-IFT Auto Testing'
-            ...                       )
-
-        """
         self._mail_config = MailConfig(smtp_server=kwargs.get('smtp_server'),
                                        smtp_port=kwargs.get('smtp_port'))
         self.template_dir = template_dir

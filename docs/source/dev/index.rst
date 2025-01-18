@@ -1,4 +1,4 @@
-.. iftglobal-development
+.. _iftglobal-development:
 
 IFT Global Developer Section
 ============================
@@ -22,3 +22,4 @@ Here is where you find all the info to raise any request.
     :maxdepth: 1
 
     documentation
+    reportissues
