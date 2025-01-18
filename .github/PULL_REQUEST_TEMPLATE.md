@@ -14,3 +14,8 @@
 - [ ] I have checked the `bandit` vulnerability report from CI/CD stage and fixed any major issue
 - [ ] I have updated the documentation accordingly
 - [ ] I have added tests to cover my changes and the overall coverage ratio was >= prior cover-ratio
+
+### Codecov reviewer
+
+@codecov-ai-reviewer review
+
