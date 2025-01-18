@@ -13,6 +13,7 @@ ift_global documentation
 ================================================
 
 **Useful links**:
+
 `Source Repository <https://github.com/iftucl/ift_global/>`__ |
 `Issues & Ideas <https://github.com/iftucl/ift_global/issues>`__ |
 `Wiki & Q&A <https://github.com/iftucl/ift_global/wiki/>`__
@@ -33,7 +34,7 @@ it provides a series of abstraction and functionalities to build the main proces
         ^^^
 
         The user guide provides in-depth information on the
-        key concepts of ift_global with useful background information and explanation.
+        how to use key functionalities of the ift_global public API.
 
         +++
 
@@ -66,13 +67,12 @@ it provides a series of abstraction and functionalities to build the main proces
         :img-top: _static/index_getting_started.svg
         :text-align: center
 
-        **Building from source**
+        ****
         ^^^
 
-        Want to build from source rather than use a Python distribution or
+        Want to install if_global or build from source rather than use a Python distribution or
         pre-built ``ift_global`` binary? This guide will describe how to set up your
-        build environment, and how to build *ift_global* itself, including the many
-        options for customizing that build.
+        build environment, and how to build *ift_global* itself.
 
         +++
 
@@ -116,6 +116,6 @@ Indices and tables
    :caption: Getting Started
 
    User Guides <userinfo/index>
-   Architecture Documents <guides/index>   
+   How To <guides/index>   
    API <reference/index>
    Development <dev/index>

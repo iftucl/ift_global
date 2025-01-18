@@ -5,9 +5,9 @@
     <em>IFT Global Python Package</em>
 </p>
 
-|||
-|--------|------|
-|**Build**|![Build Status](https://github.com/iftucl/ift_global/actions/workflows/build.yml/badge.svg)|
+|||||
+|--------------------------------|--------------------------------------|---------|-----|
+|**Build**|![Build Status](https://github.com/iftucl/ift_global/actions/workflows/build.yml/badge.svg)|**Documentation**|[![ift_global Documentation](https://shields.io/badge/ift_global-Documentation-blue?logo=Sphinx)](https://iftucl.github.io/ift_global/)|
 |**Unit Test**|[![Unit Test](https://github.com/iftucl/ift_global/actions/workflows/test.yml/badge.svg)](https://github.com/iftucl/ift_global/actions/workflows/test.yml)|
 |**Coverage**|[![Coverage](https://codecov.io/github/iftucl/ift_global/coverage.svg?branch=main)](https://codecov.io/gh/iftucl/ift_global)|
 |**Linting**|![Linters](https://github.com/iftucl/ift_global/actions/workflows/linting.yml/badge.svg)|

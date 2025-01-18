@@ -1,10 +1,13 @@
 # Bug Report
 
 ## Description
+
 Provide a clear and concise description of what the bug is.
 
 ## Reproduction Steps
+
 Steps to reproduce the behavior:
+
 1. 
 2. 
 3. 

@@ -1,10 +1,10 @@
+# tests build
 name: Build
 
 on:
   pull_request:
-    types: [closed]
-    branches:
-      - main
+    types: [opened]
+    branches: ["*"]
 
 jobs:
   build:

@@ -15,14 +15,14 @@ jobs:
       - name: Generate tag
         id: generate_tag
         run: |
-          latest_tag=$(git describe --tags --abbrev=0 2>/dev/null || echo "v0.0.0")
-          new_tag=$(echo $latest_tag | awk -F. '{$NF = $NF + 1;} 1' | sed 's/ /./g')
+          latest_tag=$(git describe tags --abrrev=0 2>/devnull || echo "v0.0.0")
+          new_tag=$(echo $latest_tag | awk -F. {$NE + 1; print $1 } | sed 's/ /./g')
           echo "NEW_TAG=$new_tag" >> $GITHUB_OUTPUT
       - name: Create and push tag
         run: |
           git config user.name github-actions
           git config user.email github-actions@github.com
-          git tag -l {{ steps.generate_tag.outputs.NEW_TAG }} && git push origin {{ steps.generate_tag.outputs.NEW_TAG }}
+          git tag ${{ steps.generate_tag.outputs.NEW_TAG }} && git push origin ${{ steps.generate_tag.outputs.NEW_TAG }}
   deploy:
     needs: create-tag
     runs-on: ubuntu-latest
@@ -41,5 +41,5 @@ jobs:
             path: dist/
       - name: Deploy
         run: |
-            # Will add here the pypi deployment steps
-            echo "Deploying version ${{ needs.create-tag.outputs.NEW_TAG }}"
+            # Will add here the pypi deployment steps needs.create-tag.outputs.NEW_TAG
+            echo "Deploying version"
