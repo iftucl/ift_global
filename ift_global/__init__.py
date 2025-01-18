@@ -25,7 +25,8 @@ Main Features:
 """
 
 from ift_global.utils.read_yaml import ReadConfig
-from connectors.minio_fileops import MinioFileSystemRepo
+from ift_global.connectors.minio_fileops import MinioFileSystemRepo
+
 __all__ = [
     "ReadConfig",
     "MinioFileSystemRepo",
