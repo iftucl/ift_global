@@ -2,6 +2,11 @@ import csv
 import pickle
 from io import BytesIO, StringIO
 from typing import Union
+import avro.schema
+from avro.datafile import DataFileWriter, DataFileReader
+from avro.io import DatumWriter, DatumReader
+import io
+
 
 import pandas as pd
 import pyarrow
@@ -124,6 +129,53 @@ def serialise_parquet(
     return body
 
 
+def serialise_avro(
+        output_data: Union[list, dict, pd.DataFrame],
+        schema: avro.schema.Schema
+    ) -> bytes:
+    """
+    Serialise data to Avro format.
+
+    :param output_data: Data to be serialized
+    :type output_data: Union[list, dict, pd.DataFrame]
+    :param schema: Avro schema for the data
+    :type schema: avro.schema.Schema
+    :raises TypeError: if data structure is not list, pdDataFrame or dict
+    :return: serialized data
+    :rtype: bytes
+    :Examples:
+        >>> schema = avro.schema.parse({
+        ...     "type": "record",
+        ...     "name": "Example",
+        ...     "fields": [
+        ...         {"name": "a", "type": "int"},
+        ...         {"name": "b", "type": "int"},
+        ...         {"name": "c", "type": "int"}
+        ...     ]
+        ... })
+        >>> output_data = [{'a': 1, 'b': 2, 'c': 5},
+        ...                {'a': 5, 'b': 6, 'c': 7},
+        ...                {'a': 18, 'b': 9, 'c': 10}]
+        >>> avro_bytes = serialise_avro(output_data, schema)
+    """
+    if not isinstance(output_data, (list, dict, pd.DataFrame)):
+        raise TypeError('Cannot serialise to Avro file. Input must be a list, dict, or DataFrame')
+
+    if isinstance(output_data, pd.DataFrame):
+        output_data = output_data.to_dict('records')
+    elif isinstance(output_data, dict):
+        output_data = [output_data]
+
+    output_buffer = io.BytesIO()
+    writer = DataFileWriter(output_buffer, DatumWriter(), schema)
+
+    for record in output_data:
+        writer.append(record)
+
+    writer.flush()
+    return output_buffer.getvalue()
+
+
 def serialise_pickle(output_data: Union[list, dict, pd.DataFrame]) -> str:
     """
     Serialise python obj to pickle.
@@ -212,6 +264,34 @@ def deserialise_parquet(response_body : str) -> pyarrow.lib.Table:
     return pq_df
 
 
+def deserialise_avro(response_body: str, schema: avro.schema.Schema) -> list:
+    """
+    Deserialize boto3 body response containing Avro data to Python objects.
+
+    :param response_body: body response from boto3 client get_object
+    :type response_body: str
+    :param schema: Avro schema for the data
+    :type schema: avro.schema.Schema
+    :return: List of deserialized Avro records
+    :rtype: list
+    :Examples:
+        >>> input_data = boto_client.get_object(
+        ...                     Bucket='my_bucket',
+        ...                     Key='root/my_file.avro'
+        ...                     )
+        >>> schema = avro.schema.parse(open("schema.avsc", "rb").read())
+        >>> avro_records = deserialise_avro(
+        ...                     input_data.get('Body'),
+        ...                     schema
+        ...                     )
+        >>> # Now you can work with the deserialized records
+        >>> for record in avro_records:
+        ...     print(record)
+    """
+    body = io.BytesIO(response_body.read())
+    reader = DataFileReader(body, DatumReader(schema))
+    return list(reader)
+
 def abstraction_serialiser(file_type : str) -> callable:
     """
     Abstraction function to select the serialiser.
@@ -222,12 +302,14 @@ def abstraction_serialiser(file_type : str) -> callable:
         serialise_csv
         serialise_parquet
         serialise_pickle
+        serialise_avro
     :rtype: callable
     """
     abstr_function = {
           "csv" : serialise_csv,
           "parquet" : serialise_parquet,
           "pickle" : serialise_pickle,
+          "avro" : serialise_avro,
      }
     if file_type not in abstr_function.keys():
         raise ValueError(f"File type incorrect, {', '.join(abstr_function.keys())} are accepted")
@@ -245,12 +327,14 @@ def abstraction_deserialiser(file_type : str) -> callable:
         deserialise_csv
         deserialise_parquet
         deserialise_pickle
+        deserialise_avro
     :rtype: callable
     """
     abstr_function = {
           "csv" : deserialise_csv,
           "parquet" : deserialise_parquet,
           "pickle" : deserialise_pickle,
+          "avro" : deserialise_avro,
      }
     if file_type not in abstr_function.keys():
         raise ValueError(f"File type incorrect, {', '.join(abstr_function.keys())} are accepted")

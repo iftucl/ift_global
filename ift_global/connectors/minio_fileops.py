@@ -136,7 +136,8 @@ class MinioFileSystemRepo(BaseMinioConnection, FileSystemRepository):
     def read_file(
             self,
             path : str,
-            file_type : str
+            file_type : str,
+            avro_schema = None
         ) -> list:
         """
         Read Files.
@@ -153,9 +154,12 @@ class MinioFileSystemRepo(BaseMinioConnection, FileSystemRepository):
         if not self.file_exists(path=path):
             raise FileExistsError
 
-        if file_type not in ('parquet', 'csv', 'pickle'):
+        if file_type not in ('parquet', 'csv', 'pickle', 'avro'):
             raise TypeError('file type not accepted, only parquet, csv and pickle file are allowed.')
-        funct_des = abstraction_deserialiser(file_type)
+        if avro_schema:
+            funct_des = abstraction_deserialiser(file_type, avro_schema)
+        else:
+            funct_des = abstraction_deserialiser(file_type)
         response = self._client.get_object(
             Bucket=self.bucket_name,
             Key=''.join((norm_path, file_name))
@@ -168,7 +172,8 @@ class MinioFileSystemRepo(BaseMinioConnection, FileSystemRepository):
                    path : str,
                    output_data: Union[dict, list, pd.DataFrame],
                    file_type: str,
-                   sep : str | None = ','):
+                   sep : str | None = ',',
+                   avro_schema = None):
         """
         Write files.
 
@@ -182,7 +187,10 @@ class MinioFileSystemRepo(BaseMinioConnection, FileSystemRepository):
         """
         norm_path = path.replace('/'+self.bucket_name+'/', '')
         serial_file = abstraction_serialiser(file_type)
-        text_body = serial_file(output_data)
+        if avro_schema:
+            text_body = serial_file(output_data, avro_schema)
+        else:
+            text_body = serial_file(output_data)
         response = self._client.put_object(
             Bucket=self.bucket_name,
             Key=norm_path,
