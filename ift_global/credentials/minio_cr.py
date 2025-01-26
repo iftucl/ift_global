@@ -62,7 +62,6 @@ class MinioCredentials(BaseModel):
     @field_validator("user", mode="after")
     @classmethod
     def check_user(cls, v: Any):
-        print("check user")
         if not v:
             try:
                 return os.environ[MinioVariablesEnv.user.value]
