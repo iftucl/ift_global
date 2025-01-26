@@ -34,7 +34,7 @@ body:
       description: >
         Please describe how the new feature would be implemented, using psudocode if relevant.
       placeholder: >
-                
+        Your pseudocode here
     validations:
       required: true
   - type: textarea

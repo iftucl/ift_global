@@ -14,3 +14,4 @@ Here, you will find a detailed guide of the main public API developed within thi
     :titlesonly:
 
     readyaml-howto
+    miniorw-howto
