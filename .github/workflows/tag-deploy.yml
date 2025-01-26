@@ -15,7 +15,7 @@ jobs:
       - name: Generate tag
         id: generate_tag
         run: |
-          latest_tag=$(git describe tags --abrrev=0 2>/devnull || echo "v0.0.0")
+          latest_tag=$(git describe --tags --abbrev=0 2>/dev/null || echo "v0.0.0")
           new_tag=$(echo $latest_tag | awk -F. {$NE + 1; print $1 } | sed 's/ /./g')
           echo "NEW_TAG=$new_tag" >> $GITHUB_OUTPUT
       - name: Create and push tag

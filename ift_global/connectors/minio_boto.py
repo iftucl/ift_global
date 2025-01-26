@@ -54,7 +54,7 @@ class BaseMinioConnection:
         try:
             minio_client = boto3.client('s3',
                     aws_access_key_id=self._credentials.user,
-                    aws_secret_access_key=self._credentials.password,
+                    aws_secret_access_key=self._credentials.password.get_secret_value(),
                     endpoint_url=self._credentials.url)
             return minio_client
         except ClientError as error:
@@ -88,7 +88,7 @@ class BaseMinioConnection:
         :rtype: boto3.client
 
         :Example:
-            >>> minio_client = BaseMinioConnection(bucket_name='loim-dev-sirs')
+            >>> minio_client = BaseMinioConnection(bucket_name='iftbigdata')
             >>> buckets = minio_client.get_client.list_buckets()
         """
         return self._client

@@ -25,4 +25,19 @@
 
 ## How to get
 
-The artifacts of this repository are not yet pushed to pypi. However, the .whl and tar files are available for download on the Build Pipeline within this repo. As the package has not yet reached a stable state we won't publish to pypi.
+The artifacts of this repository are not yet pushed to pypi.
+However, we provide some options to install and use this python library:
+
+### whl built
+
+the .whl and tar files are available for download on the Build Pipeline within this repo. As the package has not yet reached a stable state we won't publish to pypi.
+
+### poetry
+
+from the command line of your project:
+
+```bash
+
+poetry add git+https://github.com/iftucl/ift_global.git
+
+```
