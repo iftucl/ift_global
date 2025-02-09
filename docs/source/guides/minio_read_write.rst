@@ -63,3 +63,11 @@ or write:
     minio_client.write_file(file_path="/my_file/path/to/file.csv", output_data=large_df, file_type="csv")
 
 
+or upload / download a file to / from minio / local file system
+
+.. ipython:: python
+    :okexcept:
+    :verbatim:
+
+    minio_client.upload_file(remote_file_path="/iftbigdata/test/file.csv", local_file_path="/my_file/path/to/file.csv")
+    minio_client.upload_file(local_file_path="/my_file/path/to/file.csv", remote_file_path="/iftbigdata/test/file.csv")

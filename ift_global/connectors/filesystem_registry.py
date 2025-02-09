@@ -105,6 +105,31 @@ class FileSystemRepository(ABC):
         pass
 
     @abstractmethod
+    def upload_file(self, remote_file_path, local_file_path):
+        """
+        Upload file to Minio.
+
+        :param remote_file_path: The path to the file to upload
+        :type file_path: str
+        :param local_file_path: The path on the local file system for the file to upload
+        :type file_path: str
+        """
+        pass
+
+    @abstractmethod
+    def download_file(self, remote_file_path, local_file_path):
+        """
+        Download file to Minio.
+
+        :param remote_file_path: The path to the file to download
+        :type file_path: str
+        :param local_file_path: The path on the local file system where the file will be downloaded
+        :type file_path: str
+        """
+        pass
+
+
+    @abstractmethod
     def write_file(self, file_path, file_type):
         """
         Write contents to a file.

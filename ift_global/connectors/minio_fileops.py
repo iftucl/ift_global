@@ -1,4 +1,6 @@
-from typing import Union
+from typing import Union, Optional
+import os
+from botocore.exceptions import ClientError
 
 import pandas as pd
 
@@ -197,6 +199,51 @@ class MinioFileSystemRepo(BaseMinioConnection, FileSystemRepository):
             Body=text_body
             )
         return response
+    
+    def upload_file(self, local_file_path: str, remote_file_path: Optional[str] = None):
+        """
+        Upload a file from the local file system to the MinIO bucket.
+
+        :param local_file_path: Path to the file on the local file system.
+        :type local_file_path: str
+        :param object_name: Name of the object in the bucket. Defaults to the file name.
+        :type object_name: str, optional
+        :raises FileNotFoundError: If the local file does not exist.
+        :raises ClientError: If there is an error during upload.
+        """
+        if not os.path.exists(local_file_path):
+            raise FileNotFoundError(f"The file {local_file_path} does not exist.")
+        
+        if remote_file_path:
+            remote_file_path = remote_file_path.replace('/'+self.bucket_name+'/', '')
+
+        if not remote_file_path:
+            remote_file_path = os.path.basename(local_file_path)
+
+        try:
+            self._client.upload_file(local_file_path, self.bucket_name, remote_file_path)
+            print(f"File {local_file_path} uploaded to bucket {self.bucket_name} as {remote_file_path}.")
+        except ClientError as error:
+            print(f"Failed to upload {local_file_path} to {self.bucket_name}: {error}")
+            raise
+
+    def download_file(self, remote_file_path: str, local_file_path: str):
+        """
+        Download an object from the MinIO bucket to the local file system.
+
+        :param object_name: Name of the object in the bucket.
+        :type object_name: str
+        :param local_file_path: Path where the file should be saved locally.
+        :type local_file_path: str
+        :raises ClientError: If there is an error during download.
+        """
+        object_name = remote_file_path.replace('/'+self.bucket_name+'/', '')
+        try:
+            self._client.download_file(self.bucket_name, object_name, local_file_path)
+            print(f"Object {object_name} downloaded from bucket {self.bucket_name} to {local_file_path}.")
+        except ClientError as error:
+            print(f"Failed to download {object_name} from {self.bucket_name}: {error}")
+            raise
 
 
 
