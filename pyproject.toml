@@ -29,6 +29,7 @@ pydata-sphinx-theme = "^0.16.1"
 python-dotenv = "^1.0.1"
 ipython = "^8.31.0"
 avro = "^1.12.0"
+pytest-minio-mock = "^0.4.16"
 
 
 [build-system]

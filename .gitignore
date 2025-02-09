@@ -170,6 +170,7 @@ cython_debug/
 # PyPI configuration file
 .pypirc
 
+local_test.py
 # poetry lock
 *.lock
 
